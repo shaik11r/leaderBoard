@@ -148,14 +148,14 @@ function App() {
         {activeTab === "today" ? (
           <>
             <motion.ul
-              className="grid place-items-center sms"
+              className="grid place-items-center"
               variants={container}
               initial="hidden"
               animate="visible">
               {todayLeaderBoard?.map((entry, index) => (
                 <motion.li
                   key={index}
-                  className={`flex justify-between w-[60%] border rounded border-purple-500 mb-4 p-4 item
+                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-4 p-4 item
            ${
              index === 0
                ? "bg-yellow-400 text-xl text-black"
