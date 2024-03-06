@@ -120,7 +120,7 @@ function App() {
             AllTime
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="mb-5">
+        <form onSubmit={handleSubmit} className="mb-5 forsmallScreens ">
           <input
             type="text"
             placeholder="enter name"
@@ -141,14 +141,14 @@ function App() {
             required
           />
           {errors.points && <p className="text-red-500 text-xs italic">{errors.points}</p>}
-          <button type="submit" className="border border-purple-700 rounded-lg p-2">
+          <button type="submit" className="smallscreen border border-purple-700 rounded-lg p-2">
             Submit
           </button>
         </form>
         {activeTab === "today" ? (
           <>
             <motion.ul
-              className="grid place-items-center"
+              className="grid place-items-center sms"
               variants={container}
               initial="hidden"
               animate="visible">
@@ -196,7 +196,7 @@ function App() {
               {leaderBoard?.map((entry, index) => (
                 <motion.li
                   key={index}
-                  className={`flex justify-between w-[60%] border rounded border-purple-500 mb-4 p-4 item
+                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-4 p-4 item
            ${
              index === 0
                ? "bg-yellow-400 text-xl text-black"

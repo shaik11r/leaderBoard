@@ -12,3 +12,18 @@ body {
 .item {
   border-radius: 16px;
 }
+
+@media screen and (max-width: 786px) {
+  .forsmallScreens {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+  .smallscreen {
+    width: 60%;
+    margin-bottom: 1rem;
+  }
+  .sms {
+    width: 90%;
+  }
+}
