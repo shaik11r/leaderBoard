@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { easeIn, motion } from "framer-motion";
+import { Link } from "react-router-dom";
 const TeamBoard = () => {
   const [teamA, setTeamA] = useState(parseInt(localStorage.getItem("teamA")) || 0);
   const [teamB, setTeamB] = useState(parseInt(localStorage.getItem("teamB")) || 0);
@@ -23,9 +24,25 @@ const TeamBoard = () => {
     localStorage.setItem("teamB", 0);
   };
   return (
-    <>
+    <motion.div
+      initial={{ y: 20, opacity: 0, scale: 0.3 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}>
       <div className=" m-11 font-mono text-center">
         <h1 className="text-2xl p-3 mb-3">Team ScoreBoard💯</h1>
+        <Link to="/">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ ease: "easeOut", duration: 0.2 }}
+            className="my-10 rounded border border-red-500 p-2 mx-3 text-xl">
+            Back🔙
+          </motion.button>
+        </Link>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -68,7 +85,7 @@ const TeamBoard = () => {
           </motion.button>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

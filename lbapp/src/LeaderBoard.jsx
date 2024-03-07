@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 function LeaderBoard() {
   const [name, setName] = useState("");
@@ -69,6 +69,10 @@ function LeaderBoard() {
     localStorage.removeItem("todayLeaderBoard");
     setTodayLeaderBoard([]);
   };
+  const clearStatsfunAllTime = () => {
+    localStorage.removeItem("allTimeLeaderBoard");
+    setLeaderBoard([]);
+  };
   const sortLeaderBoard = (lb) => {
     return lb.sort((a, b) => b.points - a.points);
   };
@@ -90,10 +94,11 @@ function LeaderBoard() {
   };
 
   const container = {
-    hidden: { opacity: 1, scale: 0 },
+    hidden: { opacity: 1, scale: 0, y: 20 },
     visible: {
       opacity: 1,
       scale: 1,
+      y: 0,
       transition: {
         delayChildren: 0.4,
         staggerChildren: 0.3,
@@ -106,20 +111,35 @@ function LeaderBoard() {
       y: 0,
       opacity: 1,
     },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.4 } },
   };
 
   return (
-    <>
-      <div></div>
+    <motion.div
+      initial={{ y: 20, opacity: 0, scale: 0.3 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 30,
+      }}>
       <div className="m-11 font-mono text-center">
         <h1 className="text-2xl p-3 mb-3">LeaderBoard🎯</h1>
         <div className="text-xl">
-          <button onClick={() => setActiveTab("today")} className="m-2">
+          <motion.button
+            whileTap={{ scale: 0.9, rotate: 20 }}
+            className={`m-2 ${activeTab === "today" ? "border border-purple-700 p-1 rounded" : ""}`}
+            onClick={() => setActiveTab("today")}>
             Today
-          </button>
-          <button onClick={() => setActiveTab("all-time")} className="m-2">
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.9, rotate: -20 }}
+            onClick={() => setActiveTab("all-time")}
+            className={`m-2 ${
+              activeTab === "today" ? "" : "border border-purple-700 p-1 rounded"
+            }`}>
             AllTime
-          </button>
+          </motion.button>
           <Link to="/team">TeamScoreBoard</Link>
         </div>
         <form onSubmit={handleSubmit} className="mb-5 forsmallScreens ">
@@ -143,12 +163,17 @@ function LeaderBoard() {
             required
           />
           {errors.points && <p className="text-red-500 text-xs italic">{errors.points}</p>}
-          <button type="submit" className="smallscreen border border-purple-700 rounded-lg p-2">
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ ease: "easeOut", duration: 0.2 }}
+            className="smallscreen border border-purple-700 rounded-lg p-2">
             Submit
-          </button>
+          </motion.button>
         </form>
         {activeTab === "today" ? (
-          <>
+          <AnimatePresence>
             <motion.ul
               className="grid place-items-center"
               variants={container}
@@ -187,9 +212,9 @@ function LeaderBoard() {
             <button className="mt-5 border border-red-500 rounded-lg p-2" onClick={clearStatsfun}>
               clearStats🧹
             </button>
-          </>
+          </AnimatePresence>
         ) : (
-          <>
+          <AnimatePresence>
             <motion.ul
               className="grid place-items-center"
               variants={container}
@@ -225,10 +250,15 @@ function LeaderBoard() {
                 </motion.li>
               ))}
             </motion.ul>
-          </>
+            <button
+              className="mt-5 border border-red-500 rounded-lg p-2"
+              onClick={clearStatsfunAllTime}>
+              clearStats🧹
+            </button>
+          </AnimatePresence>
         )}
       </div>
-    </>
+    </motion.div>
   );
 }
 
