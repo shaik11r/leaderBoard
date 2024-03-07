@@ -182,7 +182,7 @@ function LeaderBoard() {
               {todayLeaderBoard?.map((entry, index) => (
                 <motion.li
                   key={index}
-                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-4 p-4 item
+                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-3 p-4 item
            ${
              index === 0
                ? "bg-yellow-400 text-xl text-black"
@@ -223,7 +223,7 @@ function LeaderBoard() {
               {leaderBoard?.map((entry, index) => (
                 <motion.li
                   key={index}
-                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-4 p-4 item
+                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-3 p-4 item
            ${
              index === 0
                ? "bg-yellow-400 text-xl text-black"

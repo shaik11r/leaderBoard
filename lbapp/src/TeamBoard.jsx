@@ -29,7 +29,7 @@ const TeamBoard = () => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{
         type: "spring",
-        stiffness: 300,
+        stiffness: 260,
         damping: 30,
       }}>
       <div className=" m-11 font-mono text-center">
@@ -66,7 +66,7 @@ const TeamBoard = () => {
             transition={{ ease: "easeOut", duration: 0.2 }}
             className="my-5 border border-purple-600 p-3 rounded text-xl"
             onClick={handleClickA}>
-            {`Score-${teamA} 🛺`}
+            {`Score-${teamA} 🛺 ${teamA > teamB ? "🏆" : ""}`}
           </motion.button>
         </div>
         <div className="m-3">
@@ -81,7 +81,7 @@ const TeamBoard = () => {
             transition={{ ease: "easeOut", duration: 0.2 }}
             className="my-5 border border-green-600 p-3 rounded text-xl"
             onClick={handleClickB}>
-            {`Score-${teamB} 🚗`}
+            {`Score-${teamB} 🚗 ${teamB > teamA ? "🏆" : ""}`}
           </motion.button>
         </div>
       </div>
