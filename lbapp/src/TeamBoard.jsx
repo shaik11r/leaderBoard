@@ -66,7 +66,7 @@ const TeamBoard = () => {
             transition={{ ease: "easeOut", duration: 0.2 }}
             className="my-5 border border-purple-600 p-3 rounded text-xl"
             onClick={handleClickA}>
-            {`Score-${teamA} 🛺 ${teamA > teamB ? "🏆" : ""}`}
+            {`Score-${teamA} 🚀 ${teamA > teamB ? "🏆" : ""}`}
           </motion.button>
         </div>
         <div className="m-3">

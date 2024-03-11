@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 function LeaderBoard() {
   const [name, setName] = useState("");
-  const [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(null);
   const [todayLeaderBoard, setTodayLeaderBoard] = useState(
     JSON.parse(localStorage.getItem("todayLeaderBoard")) || []
   );
@@ -12,7 +12,7 @@ function LeaderBoard() {
   );
   const [errors, setErrors] = useState({});
   const [activeTab, setActiveTab] = useState("today");
-  // console.log(activeTab);
+  const [isEdit, setisEdit] = useState(null);
 
   useEffect(() => {
     const sortLeaderBoardxy = JSON.parse(localStorage.getItem("todayLeaderBoard"));
@@ -60,13 +60,20 @@ function LeaderBoard() {
         );
         localStorage.setItem("allTimeLeaderBoard", JSON.stringify(leaderBoard));
       }
-      setPoints(0);
+      setPoints(null);
       setName("");
     }
+  };
+  const handleEdit = (entry) => {
+    setName(entry.name);
+    setPoints(entry.points);
+    setisEdit(entry);
   };
 
   const clearStatsfun = () => {
     localStorage.removeItem("todayLeaderBoard");
+    setName("");
+    setPoints("");
     setTodayLeaderBoard([]);
   };
   const clearStatsfunAllTime = () => {
@@ -154,10 +161,10 @@ function LeaderBoard() {
           {errors.name && <p className="text-red-500 text-xs italic">{errors.name}</p>}
           <input
             type="number"
-            placeholder="enter number"
+            placeholder="enter points"
             value={points}
             min={0}
-            max={3}
+            max={100}
             onChange={(e) => setPoints(e.target.value)}
             className="m-3 w-[200px] bg-black p-2"
             required
@@ -181,8 +188,8 @@ function LeaderBoard() {
               animate="visible">
               {todayLeaderBoard?.map((entry, index) => (
                 <motion.li
-                  key={index}
-                  className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-3 p-4 item
+                  key={`${entry.name}-${entry.points}`}
+                  className={`flex sms justify-between items-center w-[60%] border rounded border-purple-500 mb-3 p-4 item
            ${
              index === 0
                ? "bg-yellow-400 text-xl text-black"
@@ -204,6 +211,14 @@ function LeaderBoard() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ ease: "easeOut", duration: 0.4 }}>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{ ease: "easeOut", duration: 0.2 }}
+                      className="smallscreen border border-purple-700 rounded-lg px-1 py-1 mr-5"
+                      onClick={() => handleEdit(entry)}>
+                      Edit
+                    </motion.button>
                     {entry.points}
                   </motion.div>
                 </motion.li>
@@ -222,7 +237,7 @@ function LeaderBoard() {
               animate="visible">
               {leaderBoard?.map((entry, index) => (
                 <motion.li
-                  key={index}
+                  key={`${entry.name}-${entry.points}`}
                   className={`flex sms justify-between w-[60%] border rounded border-purple-500 mb-3 p-4 item
            ${
              index === 0
@@ -245,6 +260,14 @@ function LeaderBoard() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ ease: "easeOut", duration: 0.4 }}>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{ ease: "easeOut", duration: 0.2 }}
+                      className="smallscreen border border-purple-700 rounded-lg px-1 py-1 mr-5"
+                      onClick={() => handleEdit(entry)}>
+                      Edit
+                    </motion.button>
                     {entry.points}
                   </motion.div>
                 </motion.li>
